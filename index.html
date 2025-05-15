@@ -323,19 +323,105 @@
         font-size: 0.95rem;
       }
     }
+    .polaroid-frame {
+      position: relative;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(60,40,80,0.18);
+      border: 1.5px solid #e0e0e0;
+      padding: 12px 12px 32px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 200px;
+      margin-bottom: 0.5rem;
+    }
+    .polaroid-frame img {
+      width: 176px;
+      height: 196px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: none;
+      border: none;
+      outline: none;
+      background: #fff;
+      display: block;
+    }
+    .polaroid-caption {
+      font-family: 'Dancing Script', 'Bad Script', cursive;
+      font-size: 1.15rem;
+      color: #7b5e8b;
+      margin-top: 0.7rem;
+      text-align: center;
+      letter-spacing: 0.01em;
+      width: 100%;
+    }
+    .hanging-row {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 3.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .string {
+      position: absolute;
+      top: 18px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: repeating-linear-gradient(
+        90deg,
+        #b48ca7 0 12px,
+        #e9a5b3 12px 24px,
+        #f7dbe6 24px 36px,
+        #b48ca7 36px 48px
+      );
+      border-radius: 2px;
+      z-index: 1;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .hanging-polaroid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    .peg {
+      width: 18px;
+      height: 18px;
+      background: #e9a5b3;
+      border-radius: 4px 4px 2px 2px;
+      margin-bottom: -8px;
+      box-shadow: 0 2px 6px rgba(60,40,80,0.10);
+      position: relative;
+      z-index: 3;
+      border: 2px solid #b48ca7;
+      transform: rotate(-8deg);
+    }
+    .hanging-polaroid:nth-child(3) .peg {
+      transform: rotate(8deg);
+    }
   </style>
 </head>
 <body>
   <!-- Top photo collage -->
   <div class="photo-collage">
-    <div class="photo-collage-row">
-      <div class="stamp-frame" style="transform:rotate(-6deg);">
-        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=facearea&w=400&h=450&facepad=2" alt="Фото 1" />
-        <svg width="48" height="48" style="position:absolute;top:-18px;left:-18px;" viewBox="0 0 48 48"><path d="M4 16 Q24 0 44 16" fill="none" stroke="#888" stroke-width="2"/><path d="M4 16 Q8 24 12 16 Q16 8 20 16 Q24 24 28 16 Q32 8 36 16 Q40 24 44 16" fill="none" stroke="#888" stroke-width="2"/></svg>
+    <div class="photo-collage-row hanging-row">
+      <div class="string"></div>
+      <div class="hanging-polaroid" style="transform:rotate(-6deg);">
+        <div class="peg"></div>
+        <div class="polaroid-frame">
+          <img src="a.jpeg" alt="Фото 1" />
+        </div>
       </div>
-      <div class="stamp-frame" style="transform:rotate(7deg);">
-        <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=facearea&w=400&h=450&facepad=2" alt="Фото 2" />
-        <svg width="48" height="48" style="position:absolute;bottom:-18px;right:-18px;transform:rotate(180deg);" viewBox="0 0 48 48"><path d="M4 16 Q24 0 44 16" fill="none" stroke="#888" stroke-width="2"/><path d="M4 16 Q8 24 12 16 Q16 8 20 16 Q24 24 28 16 Q32 8 36 16 Q40 24 44 16" fill="none" stroke="#888" stroke-width="2"/></svg>
+      <div class="hanging-polaroid" style="transform:rotate(7deg);">
+        <div class="peg"></div>
+        <div class="polaroid-frame">
+          <img src="b.jpeg" alt="Фото 2" />
+        </div>
       </div>
     </div>
     <div class="script main-names">Дарья<br>+<br>Богдан</div>
@@ -457,7 +543,9 @@
       <span class="palette-color" style="background:#b7c7d6;"></span>
       <span class="palette-color" style="background:#f7dbe6;"></span>
     </div>
-    <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=facearea&w=400&h=450&facepad=2" alt="Палитра" style="width:180px; height:200px; object-fit:cover; border-radius:8px; box-shadow:0 6px 24px rgba(60,40,80,0.10); border:8px solid #fff; outline:3px dashed #f7dbe6; outline-offset:-8px; background:#fff; margin-top:1.2rem;" />
+    <div class="polaroid-frame" style="margin: 1.2rem auto 0 auto;">
+      <img src="c.jpeg" alt="Палитра" />
+    </div>
   </div>
   <!-- Wishes -->
   <div class="section">
@@ -495,7 +583,9 @@
   </div>
   <!-- Closing photo and message section -->
   <div class="closing-photo">
-    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Пара на пляже" />
+    <div class="polaroid-frame">
+      <img src="d.jpeg" alt="Пара на пляже" />
+    </div>
     <div class="script" style="font-size:1.5rem; margin-bottom:0.2rem;">08.08.2025</div>
     <div style="font-size:1.35rem; font-weight:600; text-align:center;">ОЧЕНЬ ВАС ЖДЕМ!</div>
     <div class="script" style="font-size:1.2rem; margin-top:0.7rem; margin-bottom:0.7rem; text-align:center;">С любовью, Дарья и Богдан</div>
