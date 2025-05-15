@@ -9,12 +9,36 @@
   <link href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap&subset=cyrillic" rel="stylesheet">
   <style>
     body {
-      font-family: 'Montserrat', Arial, sans-serif;
+      font-family: 'Montserrat', 'Georgia', serif;
       background: #f9f6f1;
       color: #3a2c2a;
       margin: 0;
       padding: 0;
       min-height: 100vh;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding-inline: 1rem;
+    }
+    h1, .main-names {
+      font-family: 'Dancing Script', 'Great Vibes', cursive, serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 500;
+      line-height: 1.1;
+    }
+    h2, .script {
+      font-family: 'Dancing Script', 'Bad Script', cursive, serif;
+      font-size: clamp(2rem, 4vw, 2.7rem);
+      font-weight: 400;
+      line-height: 1.2;
+    }
+    p, .section, .calendar-block, .contacts {
+      line-height: 1.5;
+      font-weight: 400;
+    }
+    section, .section {
+      margin-block: 4rem;
     }
     .script {
       font-family: 'Bad Script', cursive;
@@ -103,6 +127,8 @@
       color: #5e4a5a;
       font-size: 1.05rem;
       margin-top: 1rem;
+      margin-bottom: 0.3rem;
+      display: block;
     }
     .rsvp-form input[type="text"] {
       width: 100%;
@@ -118,13 +144,14 @@
     .rsvp-form .radio-group {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.7rem;
       margin-bottom: 1.2rem;
     }
     .rsvp-form input[type="radio"] {
       accent-color: #e9a5b3;
-      width: 1.1em;
-      height: 1.1em;
+      width: 1.2em;
+      height: 1.2em;
+      margin-right: 0.5em;
     }
     .rsvp-form button {
       margin-top: 0.5rem;
@@ -138,6 +165,19 @@
       cursor: pointer;
       transition: background 0.2s;
       width: 100%;
+    }
+    .rsvp-form button:hover, .rsvp-form button:focus {
+      background: #7b5e8b;
+    }
+    .rsvp-success {
+      color: #7b5e8b;
+      background: #f7dbe6;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1.2rem;
+      text-align: center;
+      font-size: 1.15rem;
+      font-weight: 500;
     }
     .contacts {
       color: #5e4a5a;
@@ -174,15 +214,21 @@
       width: 100%;
       max-width: 520px;
       margin: 0 auto 2.5rem auto;
+      position: relative;
     }
     .timeline-row {
       display: grid;
       grid-template-columns: 1fr 60px 1fr;
       align-items: center;
       width: 100%;
-      min-height: 90px;
+      min-height: 110px;
       position: relative;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(.4,2,.6,1), transform 0.7s cubic-bezier(.4,2,.6,1);
     }
+    .timeline-row.visible { opacity: 1; transform: none; }
     .event {
       display: flex;
       flex-direction: column;
@@ -218,22 +264,16 @@
       box-shadow: none;
     }
     .timeline-line {
-      width: 2px;
-      background: #c8b0be;
+      width: 4px;
+      background: #e9a5b3;
       flex: 1 1 auto;
-    }
-    .timeline-line.top {
-      height: 50%;
-      margin-bottom: -2px;
-    }
-    .timeline-line.bottom {
-      height: 50%;
-      margin-top: -2px;
+      border-radius: 2px;
+      margin: 0 auto;
     }
     .timeline-heart {
-      width: 32px;
-      height: 32px;
-      background: url('data:image/svg+xml;utf8,<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 28C16 28 4 19.5 4 12.5C4 8.36 7.36 5 11.5 5C13.76 5 15.84 6.23 16.99 8.09C18.14 6.23 20.22 5 22.5 5C26.64 5 30 8.36 30 12.5C30 19.5 16 28 16 28Z" fill="%23e9a5b3" stroke="%23d3a3b3" stroke-width="1.2"/></svg>') no-repeat center center/contain;
+      width: 44px;
+      height: 44px;
+      background: url('data:image/svg+xml;utf8,<svg width="44" height="44" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 28C16 28 4 19.5 4 12.5C4 8.36 7.36 5 11.5 5C13.76 5 15.84 6.23 16.99 8.09C18.14 6.23 20.22 5 22.5 5C26.64 5 30 8.36 30 12.5C30 19.5 16 28 16 28Z" fill="%23e9a5b3" stroke="%23d3a3b3" stroke-width="1.2"/></svg>') no-repeat center center/contain;
       z-index: 2;
       margin: 0.2em 0;
       background-color: transparent;
@@ -257,8 +297,8 @@
         min-height: 60px;
       }
       .timeline-heart {
-        width: 24px;
-        height: 24px;
+        width: 32px;
+        height: 32px;
       }
     }
     .countdown-heading {
@@ -404,200 +444,308 @@
     .hanging-polaroid:nth-child(3) .peg {
       transform: rotate(8deg);
     }
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 320px;
+      padding: 3rem 1rem 2rem 1rem;
+      background: linear-gradient(120deg, #f7dbe6 0%, #b7c7d6 100%);
+      border-radius: 0 0 2.5rem 2.5rem;
+      box-shadow: 0 4px 32px rgba(180,140,167,0.08);
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+    .hero .main-names {
+      font-size: clamp(2.7rem, 7vw, 4.5rem);
+      color: #7b5e8b;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 12px #fff8, 0 1px 0 #fff;
+    }
+    .hero-date {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.5rem;
+      color: #b48ca7;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      background: #fff6;
+      padding: 0.3em 1.2em;
+      border-radius: 1em;
+      box-shadow: 0 2px 8px #fff6;
+    }
+    .polaroid-frame {
+      transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.10), 0 16px 32px rgba(180,140,167,0.10);
+    }
+    .polaroid-frame:hover {
+      transform: scale(1.04) rotate(-2deg);
+      box-shadow: 0 16px 32px rgba(180,140,167,0.18), 0 2px 8px #fff8;
+      z-index: 10;
+    }
+    .peg {
+      box-shadow: 0 4px 12px 0 #b48ca7aa;
+    }
+    /* CTA and Link Colors */
+    a, .rsvp-form button {
+      transition: color 0.2s, background 0.2s;
+    }
+    a {
+      color: #b48ca7;
+      text-decoration: underline;
+    }
+    a:hover, a:focus {
+      color: #e9a5b3;
+      text-decoration: underline wavy;
+    }
+    /* Custom Radio Button */
+    .custom-radio {
+      position: relative;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      font-size: 1rem;
+      gap: 0.6rem;
+      user-select: none;
+    }
+    .custom-radio input[type="radio"] {
+      opacity: 0;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1.2em;
+      height: 1.2em;
+      margin: 0;
+      z-index: 2;
+      cursor: pointer;
+    }
+    .custom-radio .radio-mark {
+      width: 1.2em;
+      height: 1.2em;
+      border-radius: 50%;
+      border: 2px solid #e9a5b3;
+      background: #fff;
+      display: inline-block;
+      position: relative;
+      transition: border-color 0.2s;
+      box-shadow: 0 1px 4px #e9a5b355;
+    }
+    .custom-radio input[type="radio"]:checked + .radio-mark {
+      border-color: #b48ca7;
+      background: radial-gradient(circle at 50% 50%, #e9a5b3 55%, #fff 60%);
+    }
+    .custom-radio input[type="radio"]:focus + .radio-mark {
+      outline: 2px solid #b7c7d6;
+      outline-offset: 2px;
+    }
+    /* Button Focus Ring */
+    .rsvp-form button:focus {
+      outline: 3px solid #b7c7d6;
+      outline-offset: 2px;
+    }
   </style>
 </head>
 <body>
-  <!-- Top photo collage -->
-  <div class="photo-collage">
-    <div class="photo-collage-row hanging-row">
-      <div class="string"></div>
-      <div class="hanging-polaroid" style="transform:rotate(-6deg);">
-        <div class="peg"></div>
-        <div class="polaroid-frame">
-          <img src="a.jpeg" alt="Фото 1" />
-        </div>
-      </div>
-      <div class="hanging-polaroid" style="transform:rotate(7deg);">
-        <div class="peg"></div>
-        <div class="polaroid-frame">
-          <img src="b.jpeg" alt="Фото 2" />
-        </div>
-      </div>
+  <div class="container">
+    <div class="hero">
+      <div class="main-names">Дарья<br>+<br>Богдан</div>
+      <div class="hero-date">08.08.2025</div>
     </div>
-    <div class="script main-names">Дарья<br>+<br>Богдан</div>
-  </div>
-  <!-- Intro -->
-  <div class="section">
-    <div class="script" style="font-size:2.5rem; margin-bottom:1.2rem;">Приглашение на свадьбу</div>
-    <div style="color:#5e4a5a; text-align:center; max-width:520px; font-size:1.2rem; margin-bottom:1.2rem;">Как же быстро летит время!<br>Мы так счастливы, что нашли друг друга!</div>
-    <div style="color:#5e4a5a; text-align:center; max-width:520px; font-size:1.2rem; margin-bottom:1.2rem;">Мы будем счастливы разделить с Вами радость прекрасного для нас дня — дня нашей свадьбы!<br>Этот день, когда мы станем семьей, будет самым значимым в нашей жизни, и мы хотим разделить его с вами!</div>
-  </div>
-  <!-- Calendar -->
-  <div class="calendar-block">
-    <div class="script" style="font-size:2rem; margin-bottom:1.2rem;">Август 2025</div>
-    <table style="border-collapse:separate; border-spacing:0.5rem; background:transparent;">
-      <thead>
-        <tr style="color:#b48ca7; font-size:1.1rem;">
-          <th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th>Сб</th><th>Вс</th>
-        </tr>
-      </thead>
-      <tbody style="font-size:1.1rem; color:#5e4a5a; text-align:center;">
-        <tr><td></td><td></td><td></td><td></td><td>1</td><td>2</td><td>3</td></tr>
-        <tr><td>4</td><td>5</td><td>6</td><td>7</td><td style="position:relative;">
-          <span style="position:relative;display:inline-block;">
-            8
-            <svg width="22" height="22" viewBox="0 0 22 22" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-60%);z-index:-1;">
-              <path d="M11 19s-7-4.35-7-9.5A4.5 4.5 0 0 1 11 5a4.5 4.5 0 0 1 7 4.5C18 14.65 11 19 11 19z" fill="#e9a5b3"/>
-            </svg>
-          </span>
-        </td><td>9</td><td>10</td></tr>
-        <tr><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td></tr>
-        <tr><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td></tr>
-        <tr><td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <!-- Venue -->
-  <div class="section">
-    <div class="script" style="font-size:2rem; margin-bottom:1.1rem;">Место проведения</div>
-    <div style="font-size:1.15rem; font-weight:500; margin-bottom:0.5rem;">Ресторан «Усадьба»</div>
-    <div style="font-size:1rem; margin-bottom:1.1rem;">пос, ул. Заречная, 8, Орловка</div>
-  </div>
-  <!-- Schedule -->
-  <div class="section">
-    <div class="script" style="font-size:3rem; margin-bottom:2.2rem;">План дня</div>
-    <div class="timeline-grid">
-      <div class="timeline-row">
-        <div class="event left">
-          <div class="event-title">Сбор гостей</div>
-          <div class="event-time">15:00</div>
+    <!-- Top photo collage -->
+    <div class="photo-collage">
+      <div class="photo-collage-row hanging-row">
+        <div class="string"></div>
+        <div class="hanging-polaroid" style="transform:rotate(-6deg);">
+          <div class="peg"></div>
+          <div class="polaroid-frame">
+            <img src="a.jpeg" alt="Фото 1" />
+          </div>
         </div>
-        <div class="timeline-center">
-          <div class="timeline-line top"></div>
-          <div class="timeline-heart"></div>
-          <div class="timeline-line bottom"></div>
-        </div>
-        <div class="event right"></div>
-      </div>
-      <div class="timeline-row">
-        <div class="event left"></div>
-        <div class="timeline-center">
-          <div class="timeline-line top"></div>
-          <div class="timeline-heart"></div>
-          <div class="timeline-line bottom"></div>
-        </div>
-        <div class="event right">
-          <div class="event-title">Церемония</div>
-          <div class="event-time">15:30</div>
-        </div>
-      </div>
-      <div class="timeline-row">
-        <div class="event left">
-          <div class="event-title">Банкет</div>
-          <div class="event-time">16:00</div>
-        </div>
-        <div class="timeline-center">
-          <div class="timeline-line top"></div>
-          <div class="timeline-heart"></div>
-          <div class="timeline-line bottom"></div>
-        </div>
-        <div class="event right"></div>
-      </div>
-      <div class="timeline-row">
-        <div class="event left"></div>
-        <div class="timeline-center">
-          <div class="timeline-line top"></div>
-          <div class="timeline-heart"></div>
-          <div class="timeline-line bottom"></div>
-        </div>
-        <div class="event right">
-          <div class="event-title">Завершение вечера</div>
-          <div class="event-time">23:00</div>
+        <div class="hanging-polaroid" style="transform:rotate(7deg);">
+          <div class="peg"></div>
+          <div class="polaroid-frame">
+            <img src="b.jpeg" alt="Фото 2" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- Countdown -->
-  <div class="section" id="countdown-section">
-    <div class="countdown-heading">до торжества осталось</div>
-    <div class="countdown-timer">
-      <span id="days">0</span><span class="colon">:</span>
-      <span id="hours">0</span><span class="colon">:</span>
-      <span id="minutes">0</span><span class="colon">:</span>
-      <span id="seconds">0</span>
+    <!-- Intro -->
+    <div class="section">
+      <div class="script" style="font-size:2.5rem; margin-bottom:1.2rem;">Приглашение на свадьбу</div>
+      <div style="color:#5e4a5a; text-align:center; max-width:520px; font-size:1.2rem; margin-bottom:1.2rem;">Как же быстро летит время!<br>Мы так счастливы, что нашли друг друга!</div>
+      <div style="color:#5e4a5a; text-align:center; max-width:520px; font-size:1.2rem; margin-bottom:1.2rem;">Мы будем счастливы разделить с Вами радость прекрасного для нас дня — дня нашей свадьбы!<br>Этот день, когда мы станем семьей, будет самым значимым в нашей жизни, и мы хотим разделить его с вами!</div>
     </div>
-    <div class="countdown-labels">
-      <span>дней</span>
-      <span>часов</span>
-      <span>минут</span>
-      <span>секунд</span>
+    <!-- Calendar -->
+    <div class="calendar-block">
+      <div class="script" style="font-size:2rem; margin-bottom:1.2rem;">Август 2025</div>
+      <table style="border-collapse:separate; border-spacing:0.5rem; background:transparent;">
+        <thead>
+          <tr style="color:#b48ca7; font-size:1.1rem;">
+            <th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th>Сб</th><th>Вс</th>
+          </tr>
+        </thead>
+        <tbody style="font-size:1.1rem; color:#5e4a5a; text-align:center;">
+          <tr><td></td><td></td><td></td><td></td><td>1</td><td>2</td><td>3</td></tr>
+          <tr><td>4</td><td>5</td><td>6</td><td>7</td><td style="position:relative;">
+            <span style="position:relative;display:inline-block;">
+              8
+              <svg width="22" height="22" viewBox="0 0 22 22" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-60%);z-index:-1;">
+                <path d="M11 19s-7-4.35-7-9.5A4.5 4.5 0 0 1 11 5a4.5 4.5 0 0 1 7 4.5C18 14.65 11 19 11 19z" fill="#e9a5b3"/>
+              </svg>
+            </span>
+          </td><td>9</td><td>10</td></tr>
+          <tr><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td></tr>
+          <tr><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td></tr>
+          <tr><td>25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td></tr>
+        </tbody>
+      </table>
     </div>
-  </div>
-  <!-- Dress code -->
-  <div class="section">
-    <div class="script" style="font-size:2rem; margin-bottom:1.1rem;">Дресс-код</div>
-    <div style="color:#5e4a5a; margin-bottom:0.7rem; text-align:center; max-width:420px;">Мы очень старались сделать праздник красивым и будем рады, если в своих нарядах Вы поддержите цветовую гамму нашей свадьбы</div>
-    <div class="palette" aria-label="Цветовая палитра">
-      <span class="palette-color" style="background:#5e5e66;"></span>
-      <span class="palette-color" style="background:#7b5e8b;"></span>
-      <span class="palette-color" style="background:#b7c7d6;"></span>
-      <span class="palette-color" style="background:#f7dbe6;"></span>
+    <!-- Venue -->
+    <div class="section">
+      <div class="script" style="font-size:2rem; margin-bottom:1.1rem;">Место проведения</div>
+      <div style="font-size:1.15rem; font-weight:500; margin-bottom:0.5rem;">Ресторан «Усадьба»</div>
+      <div style="font-size:1rem; margin-bottom:1.1rem;">пос, ул. Заречная, 8, Орловка</div>
     </div>
-    <div class="polaroid-frame" style="margin: 1.2rem auto 0 auto;">
-      <img src="c.jpeg" alt="Палитра" />
-    </div>
-  </div>
-  <!-- Wishes -->
-  <div class="section">
-    <div class="script" style="font-size:2rem; margin-bottom:1.1rem;">Пожелания</div>
-    <div style="color:#5e4a5a; text-align:center; max-width:480px; margin-bottom:0.7rem;">Свои тёплые слова и пожелания приносите в сердцах, а подарки — в конверте<br><br>На счет цветов еще решается</div>
-  </div>
-  <!-- RSVP -->
-  <div class="section">
-    <form class="rsvp-form">
-      <div class="script" style="font-size:1.6rem; text-align:center; margin-bottom:1.1rem;">Анкета гостя</div>
-      <div style="color:#5e4a5a; text-align:center; margin-bottom:1.2rem;">Пожалуйста, подтвердите свое присутствие</div>
-      <label for="rsvp-name">Ваше Имя и Фамилия</label>
-      <input id="rsvp-name" name="rsvp-name" type="text" required placeholder="ФИО" />
-      <div style="color:#5e4a5a; font-size:1.05rem; margin-bottom:0.5rem;">Вы сможете присутствовать на торжестве?</div>
-      <div class="radio-group">
-        <label style="display:flex; align-items:center; gap:0.6rem; cursor:pointer;">
-          <input type="radio" name="rsvp-attend" value="yes" required />
-          да, обязательно приду
-        </label>
-        <label style="display:flex; align-items:center; gap:0.6rem; cursor:pointer;">
-          <input type="radio" name="rsvp-attend" value="no" required />
-          к сожалению, не смогу
-        </label>
+    <!-- Schedule -->
+    <div class="section">
+      <div class="script" style="font-size:3rem; margin-bottom:2.2rem;">План дня</div>
+      <div class="timeline-grid">
+        <div class="timeline-row">
+          <div class="event left">
+            <div class="event-title">Сбор гостей</div>
+            <div class="event-time">15:00</div>
+          </div>
+          <div class="timeline-center">
+            <div class="timeline-line top"></div>
+            <div class="timeline-heart"></div>
+            <div class="timeline-line bottom"></div>
+          </div>
+          <div class="event right"></div>
+        </div>
+        <div class="timeline-row">
+          <div class="event left"></div>
+          <div class="timeline-center">
+            <div class="timeline-line top"></div>
+            <div class="timeline-heart"></div>
+            <div class="timeline-line bottom"></div>
+          </div>
+          <div class="event right">
+            <div class="event-title">Церемония</div>
+            <div class="event-time">15:30</div>
+          </div>
+        </div>
+        <div class="timeline-row">
+          <div class="event left">
+            <div class="event-title">Банкет</div>
+            <div class="event-time">16:00</div>
+          </div>
+          <div class="timeline-center">
+            <div class="timeline-line top"></div>
+            <div class="timeline-heart"></div>
+            <div class="timeline-line bottom"></div>
+          </div>
+          <div class="event right"></div>
+        </div>
+        <div class="timeline-row">
+          <div class="event left"></div>
+          <div class="timeline-center">
+            <div class="timeline-line top"></div>
+            <div class="timeline-heart"></div>
+            <div class="timeline-line bottom"></div>
+          </div>
+          <div class="event right">
+            <div class="event-title">Завершение вечера</div>
+            <div class="event-time">23:00</div>
+          </div>
+        </div>
       </div>
-      <button type="submit">Ответить</button>
-    </form>
-  </div>
-  <!-- Contacts -->
-  <div class="section contacts">
-    <div class="script" style="font-size:2rem; margin-bottom:1.1rem;">Контакты</div>
-    По всем вопросам, связанным с торжественным вечером и сюрпризами, просим обращаться к невесте или ведущему:<br>
-    <strong>Дарья</strong> <a href="tel:+79024163795" style="color:#7b5e8b;text-decoration:underline;">+7 902 416-37-95</a><br>
-    <strong>Марина</strong> <a href="tel:+79003473020" style="color:#7b5e8b;text-decoration:underline;">+7 900 347-30-20</a><br>
-    <span style="color:#a08bbd; font-size:0.95rem;">(Ведущий пока под вопросом, тк мы думаем с ней на счет чата-группы для гостей, без нас с Богданом)</span>
-  </div>
-  <!-- Closing photo and message section -->
-  <div class="closing-photo">
-    <div class="polaroid-frame">
-      <img src="d.jpeg" alt="Пара на пляже" />
     </div>
-    <div class="script" style="font-size:1.5rem; margin-bottom:0.2rem;">08.08.2025</div>
-    <div style="font-size:1.35rem; font-weight:600; text-align:center;">ОЧЕНЬ ВАС ЖДЕМ!</div>
-    <div class="script" style="font-size:1.2rem; margin-top:0.7rem; margin-bottom:0.7rem; text-align:center;">С любовью, Дарья и Богдан</div>
-    <div class="hearts">
-      <svg width="32" height="32" viewBox="0 0 32 32"><path d="M16 29s-9-5.6-9-12.25A6.25 6.25 0 0 1 16 7a6.25 6.25 0 0 1 9 9.75C25 23.4 16 29 16 29z" fill="#e9a5b3"/></svg>
-      <svg width="32" height="32" viewBox="0 0 32 32"><path d="M16 29s-9-5.6-9-12.25A6.25 6.25 0 0 1 16 7a6.25 6.25 0 0 1 9 9.75C25 23.4 16 29 16 29z" fill="#e9a5b3"/></svg>
-      <svg width="32" height="32" viewBox="0 0 32 32"><path d="M16 29s-9-5.6-9-12.25A6.25 6.25 0 0 1 16 7a6.25 6.25 0 0 1 9 9.75C25 23.4 16 29 16 29z" fill="#e9a5b3"/></svg>
+    <!-- Countdown -->
+    <div class="section" id="countdown-section">
+      <div class="countdown-heading">до торжества осталось</div>
+      <div class="countdown-timer">
+        <span id="days">0</span><span class="colon">:</span>
+        <span id="hours">0</span><span class="colon">:</span>
+        <span id="minutes">0</span><span class="colon">:</span>
+        <span id="seconds">0</span>
+      </div>
+      <div class="countdown-labels">
+        <span>дней</span>
+        <span>часов</span>
+        <span>минут</span>
+        <span>секунд</span>
+      </div>
     </div>
+    <!-- Dress code -->
+    <div class="section">
+      <div class="script" style="font-size:2rem; margin-bottom:1.1rem;">Дресс-код</div>
+      <div style="color:#5e4a5a; margin-bottom:0.7rem; text-align:center; max-width:420px;">Мы очень старались сделать праздник красивым и будем рады, если в своих нарядах Вы поддержите цветовую гамму нашей свадьбы</div>
+      <div class="palette" aria-label="Цветовая палитра">
+        <span class="palette-color" style="background:#5e5e66;"></span>
+        <span class="palette-color" style="background:#7b5e8b;"></span>
+        <span class="palette-color" style="background:#b7c7d6;"></span>
+        <span class="palette-color" style="background:#f7dbe6;"></span>
+      </div>
+      <div class="polaroid-frame" style="margin: 1.2rem auto 0 auto;">
+        <img src="c.jpeg" alt="Палитра" />
+      </div>
+    </div>
+    <!-- Wishes -->
+    <div class="section">
+      <div class="script" style="font-size:2rem; margin-bottom:1.1rem;">Пожелания</div>
+      <div style="color:#5e4a5a; text-align:center; max-width:480px; margin-bottom:0.7rem;">Свои тёплые слова и пожелания приносите в сердцах, а подарки — в конверте<br><br>На счет цветов еще решается</div>
+    </div>
+    <!-- RSVP -->
+    <div class="section">
+      <form class="rsvp-form" id="rsvp-form">
+        <div class="script" style="font-size:1.6rem; text-align:center; margin-bottom:1.1rem;">Анкета гостя</div>
+        <div style="color:#5e4a5a; text-align:center; margin-bottom:1.2rem;">Пожалуйста, подтвердите свое присутствие</div>
+        <label for="rsvp-name">Ваше Имя и Фамилия</label>
+        <input id="rsvp-name" name="rsvp-name" type="text" required placeholder="ФИО" />
+        <div style="color:#5e4a5a; font-size:1.05rem; margin-bottom:0.5rem;">Вы сможете присутствовать на торжестве?</div>
+        <div class="radio-group">
+          <label class="custom-radio">
+            <input type="radio" name="rsvp-attend" value="yes" required />
+            <span class="radio-mark"></span>
+            да, обязательно приду
+          </label>
+          <label class="custom-radio">
+            <input type="radio" name="rsvp-attend" value="no" required />
+            <span class="radio-mark"></span>
+            к сожалению, не смогу
+          </label>
+        </div>
+        <button type="submit">Ответить</button>
+        <div id="rsvp-success" class="rsvp-success" style="display:none;">Спасибо за ваш ответ! Мы вас ждем!</div>
+      </form>
+    </div>
+    <!-- Contacts -->
+    <div class="section contacts">
+      <div class="script" style="font-size:2rem; margin-bottom:1.1rem;">Контакты</div>
+      По всем вопросам, связанным с торжественным вечером и сюрпризами, просим обращаться к невесте или ведущему:<br>
+      <strong>Дарья</strong> <a href="tel:+79024163795" style="color:#7b5e8b;text-decoration:underline;">+7 902 416-37-95</a><br>
+      <strong>Марина</strong> <a href="tel:+79003473020" style="color:#7b5e8b;text-decoration:underline;">+7 900 347-30-20</a><br>
+      <span style="color:#a08bbd; font-size:0.95rem;">(Ведущий пока под вопросом, тк мы думаем с ней на счет чата-группы для гостей, без нас с Богданом)</span>
+    </div>
+    <!-- Closing photo and message section -->
+    <div class="closing-photo">
+      <div class="polaroid-frame">
+        <img src="d.jpeg" alt="Пара на пляже" />
+      </div>
+      <div class="script" style="font-size:1.5rem; margin-bottom:0.2rem;">08.08.2025</div>
+      <div style="font-size:1.35rem; font-weight:600; text-align:center;">ОЧЕНЬ ВАС ЖДЕМ!</div>
+      <div class="script" style="font-size:1.2rem; margin-top:0.7rem; margin-bottom:0.7rem; text-align:center;">С любовью, Дарья и Богдан</div>
+      <div class="hearts">
+        <svg width="32" height="32" viewBox="0 0 32 32"><path d="M16 29s-9-5.6-9-12.25A6.25 6.25 0 0 1 16 7a6.25 6.25 0 0 1 9 9.75C25 23.4 16 29 16 29z" fill="#e9a5b3"/></svg>
+        <svg width="32" height="32" viewBox="0 0 32 32"><path d="M16 29s-9-5.6-9-12.25A6.25 6.25 0 0 1 16 7a6.25 6.25 0 0 1 9 9.75C25 23.4 16 29 16 29z" fill="#e9a5b3"/></svg>
+        <svg width="32" height="32" viewBox="0 0 32 32"><path d="M16 29s-9-5.6-9-12.25A6.25 6.25 0 0 1 16 7a6.25 6.25 0 0 1 9 9.75C25 23.4 16 29 16 29z" fill="#e9a5b3"/></svg>
+      </div>
+    </div>
+    <footer>
+      С любовью, Дарья и Богдан
+    </footer>
   </div>
-  <footer>
-    С любовью, Дарья и Богдан
-  </footer>
   <script>
     // Countdown to 8 August 2025, 15:00 local time
     const weddingDate = new Date(2025, 7, 8, 15, 0, 0); // Months are 0-indexed
@@ -610,12 +758,40 @@
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
       document.getElementById('days').textContent = days;
-      document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-      document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-      document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
     }
     setInterval(updateCountdown, 1000);
     updateCountdown();
+    // RSVP Success State
+    document.getElementById('rsvp-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('rsvp-success').style.display = 'block';
+      this.reset();
+    });
+    // Timeline fade-in on scroll with stagger, works as you scroll
+    function revealTimelineRows() {
+      const rows = document.querySelectorAll('.timeline-row');
+      const trigger = window.innerHeight * 0.92;
+      let delay = 0;
+      rows.forEach((row, i) => {
+        const rect = row.getBoundingClientRect();
+        if (rect.top < trigger && rect.bottom > 0) {
+          if (!row.classList.contains('visible')) {
+            setTimeout(() => row.classList.add('visible'), delay);
+            delay += 120;
+          }
+        } else {
+          row.classList.remove('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', revealTimelineRows);
+    window.addEventListener('resize', revealTimelineRows);
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(revealTimelineRows, 200);
+    });
   </script>
 </body>
 </html>
