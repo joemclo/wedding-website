@@ -483,8 +483,8 @@
         margin-bottom: -30px;
       }
       .hanging-polaroid, .polaroid-frame {
-        width: 140px !important;
-        height: 150px !important;
+        width: 140px;
+        height: 150px;
         min-width: 0;
         min-height: 0;
         max-width: 90vw;
@@ -516,6 +516,12 @@
       .hanging-polaroid:last-child {
         left: 70px;
         margin-top: -60px;
+      }
+      .main-polaroid {
+        width: auto;
+        height: 87vw;
+        position: initial;
+        max-height: inherit;
       }
       .string, .peg {
         display: none !important;
@@ -667,7 +673,7 @@
         <span class="palette-color" style="background:#b7c7d6;"></span>
         <span class="palette-color" style="background:#f7dbe6;"></span>
       </div>
-      <div class="polaroid-frame" style="margin: 1.2rem auto 0 auto;">
+      <div class="main-polaroid polaroid-frame" style="margin: 1.2rem auto 0 auto;">
         <img src="c.jpeg" alt="Палитра" />
       </div>
     </div>
@@ -714,7 +720,7 @@
     </div>
     <!-- Closing photo and message section -->
     <div class="closing-photo">
-      <div class="polaroid-frame">
+      <div class="main-polaroid polaroid-frame">
         <img src="d.jpeg" alt="Пара на пляже" />
       </div>
       <div class="script" style="font-size:1.5rem; margin-bottom:0.2rem;">08.08.2025</div>
