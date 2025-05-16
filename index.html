@@ -300,57 +300,40 @@
       font-family: 'Montserrat', Arial, sans-serif;
       display: inline-block;
     }
-    .countdown-timer {
-      display: flex;
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
       justify-content: center;
-      align-items: center;
-      font-size: 2.5rem;
+      align-items: end;
+      gap: 0.2em;
       font-family: 'Montserrat', Arial, sans-serif;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-      letter-spacing: 0.1em;
+      margin-bottom: 1.2rem;
     }
-    .countdown-timer span {
-      min-width: 2.2ch;
-      text-align: center;
+    .countdown-value {
+      font-size: 2.5rem;
+      font-weight: 500;
       background: #f9f6f1;
       border-radius: 50%;
-      margin: 0 0.15em;
+      min-width: 2.2ch;
+      text-align: center;
       padding: 0.1em 0.2em;
       color: #222;
     }
-    .countdown-timer .colon {
-      background: none;
-      color: #888;
+    .countdown-colon {
       font-size: 2.2rem;
-      padding: 0;
-      margin: 0 0.1em;
+      color: #888;
+      align-self: center;
     }
-    .countdown-labels {
-      display: flex;
-      justify-content: center;
-      gap: 2.5rem;
+    .countdown-label {
       font-size: 1.1rem;
       color: #444;
-      font-family: 'Montserrat', Arial, sans-serif;
+      text-align: center;
       margin-top: 0.2rem;
     }
-    .countdown-labels span {
-      min-width: 4ch;
-      text-align: center;
-    }
     @media (max-width: 600px) {
-      .countdown-heading {
-        font-size: 1.2rem;
-        padding: 0.2em 0.5em;
-      }
-      .countdown-timer {
-        font-size: 1.5rem;
-      }
-      .countdown-labels {
-        gap: 1.2rem;
-        font-size: 0.95rem;
-      }
+      .countdown-value { font-size: 1.5rem; }
+      .countdown-colon { font-size: 1.2rem; }
+      .countdown-label { font-size: 0.95rem; }
     }
     .polaroid-frame {
       position: relative;
@@ -525,6 +508,10 @@
       .string-svg {
         display: none !important;
       }
+
+      .peg {
+        display: none;
+      }
     }
     .custom-heart {
       display: inline-block;
@@ -608,8 +595,8 @@
       <div class="timeline-grid">
         <div class="timeline-row">
           <div class="event left">
-            <div class="event-title">Сбор гостей</div>
-            <div class="event-time">15:00</div>
+            <div class="event-title">Церемония</div>
+            <div class="event-time">15:50</div>
           </div>
           <div class="timeline-center">
             <div class="timeline-line top"></div>
@@ -659,17 +646,22 @@
     <!-- Countdown -->
     <div class="section" id="countdown-section">
       <div class="countdown-heading">до торжества осталось</div>
-      <div class="countdown-timer">
-        <span id="days">0</span><span class="colon">:</span>
-        <span id="hours">0</span><span class="colon">:</span>
-        <span id="minutes">0</span><span class="colon">:</span>
-        <span id="seconds">0</span>
-      </div>
-      <div class="countdown-labels">
-        <span>дней</span>
-        <span>часов</span>
-        <span>минут</span>
-        <span>секунд</span>
+      <div class="countdown-grid">
+        <div class="countdown-value" id="days">0</div>
+        <div class="countdown-colon">:</div>
+        <div class="countdown-value" id="hours">0</div>
+        <div class="countdown-colon">:</div>
+        <div class="countdown-value" id="minutes">0</div>
+        <div class="countdown-colon">:</div>
+        <div class="countdown-value" id="seconds">0</div>
+
+        <div class="countdown-label">дней</div>
+        <div></div>
+        <div class="countdown-label">часов</div>
+        <div></div>
+        <div class="countdown-label">минут</div>
+        <div></div>
+        <div class="countdown-label">секунд</div>
       </div>
     </div>
     <!-- Dress code -->
@@ -677,10 +669,13 @@
       <div class="script" style="font-size:2rem; margin-bottom:1.1rem;">Дресс-код</div>
       <div style="color:#5e4a5a; margin-bottom:0.7rem; text-align:center; max-width:420px;">Мы очень старались сделать праздник красивым и будем рады, если в своих нарядах Вы поддержите цветовую гамму нашей свадьбы</div>
       <div class="palette" aria-label="Цветовая палитра">
-        <span class="palette-color" style="background:#5e5e66;"></span>
-        <span class="palette-color" style="background:#7b5e8b;"></span>
-        <span class="palette-color" style="background:#b7c7d6;"></span>
-        <span class="palette-color" style="background:#f7dbe6;"></span>
+        <span class="palette-color" style="background:#dac8ef;"></span>
+        <span class="palette-color" style="background:#f8cadf;"></span>
+        <span class="palette-color" style="background:#c5dcca;"></span>
+        <span class="palette-color" style="background:#b3cce2;"></span>
+        <span class="palette-color" style="background:#f4ddb1;"></span>
+        <span class="palette-color" style="background:#e3ccb3;"></span>
+
       </div>
       <div class="main-polaroid polaroid-frame" style="margin: 1.2rem auto 0 auto;">
         <img src="c.jpeg" alt="Палитра" />
