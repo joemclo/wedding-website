@@ -684,7 +684,7 @@
     </div>
     <!-- RSVP -->
     <div class="section">
-      <form class="rsvp-form" id="rsvp-form" name="rsvp" netlify netlify-honeypot="bot-field">
+      <form class="rsvp-form" id="rsvp-form" name="rsvp" netlify netlify-honeypot="bot-field" action="/thank-you.html" method="POST">
         <input type="hidden" name="form-name" value="rsvp" />
         <p style="display:none">
           <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -711,7 +711,6 @@
           Мне нужна будет транспортировка до места
         </label>
         <button type="submit">Ответить</button>
-        <div id="rsvp-success" class="rsvp-success" style="display:none;">Спасибо за ваш ответ! Мы вас ждем!</div>
       </form>
     </div>
     <!-- Contacts -->
@@ -759,12 +758,6 @@
     }
     setInterval(updateCountdown, 1000);
     updateCountdown();
-    // RSVP Success State
-    document.getElementById('rsvp-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      document.getElementById('rsvp-success').style.display = 'block';
-      this.reset();
-    });
     // Timeline fade-in on scroll with stagger, works as you scroll
     function revealTimelineRows() {
       const rows = document.querySelectorAll('.timeline-row');
