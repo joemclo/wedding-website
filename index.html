@@ -684,7 +684,11 @@
     </div>
     <!-- RSVP -->
     <div class="section">
-      <form class="rsvp-form" id="rsvp-form">
+      <form class="rsvp-form" id="rsvp-form" name="rsvp" netlify netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="rsvp" />
+        <p style="display:none">
+          <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+        </p>
         <div class="script" style="font-size:1.6rem; text-align:center; margin-bottom:1.1rem;">Анкета гостя</div>
         <div style="color:#5e4a5a; text-align:center; margin-bottom:1.2rem;">Пожалуйста, подтвердите свое присутствие</div>
         <label for="rsvp-name">Ваше Имя и Фамилия</label>
