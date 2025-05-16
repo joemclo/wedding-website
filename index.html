@@ -200,6 +200,14 @@
       border: 8px solid #f9f6f1;
       margin-bottom: 1.1rem;
     }
+    .closing-photo img.main-hearts-img {
+      width: 110px;
+      max-width: 90vw;
+      height: auto;
+      box-shadow: none;
+      border: none;
+      margin-bottom: 0;
+    }
     .hearts {
       display: flex;
       gap: 0.5rem;
@@ -271,11 +279,9 @@
     .timeline-heart {
       width: 44px;
       height: 44px;
-      background: url('data:image/svg+xml;utf8,<svg width="44" height="44" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 28C16 28 4 19.5 4 12.5C4 8.36 7.36 5 11.5 5C13.76 5 15.84 6.23 16.99 8.09C18.14 6.23 20.22 5 22.5 5C26.64 5 30 8.36 30 12.5C30 19.5 16 28 16 28Z" fill="%23e9a5b3" stroke="%23d3a3b3" stroke-width="1.2"/></svg>') no-repeat center center/contain;
-      z-index: 2;
-      margin: 0.2em 0;
-      background-color: transparent;
-      border: none;
+      background: none;
+      box-shadow: 0 2px 8px rgba(60,40,80,0.03);
+      display: inline-block;
     }
     footer {
       text-align: center;
@@ -446,6 +452,13 @@
       height: 32px;
       opacity: 0.7;
     }
+    .main-hearts-img {
+      display: block;
+      margin: 0 auto 2rem auto;
+      width: 110px;
+      max-width: 90vw;
+      height: auto;
+    }
 
     @media (max-width: 600px) {
       .timeline-grid {
@@ -512,6 +525,18 @@
         display: none !important;
       }
     }
+    .custom-heart {
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 0.15em;
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      transition: transform 0.2s;
+    }
+    .custom-heart:hover {
+      transform: scale(1.1) rotate(-3deg);
+    }
   </style>
 </head>
 <body>
@@ -538,9 +563,7 @@
       <div class="main-names-below">Дарья<br>+<br>Богдан</div>
       <div class="main-date-below">08.08.2025</div>
       <div class="main-hearts">
-        <span class="timeline-heart"></span>
-        <span class="timeline-heart"></span>
-        <span class="timeline-heart"></span>
+        <img src="hearts.png" alt="hearts" class="main-hearts-img" />
       </div>
     </div>
     <!-- Intro -->
@@ -563,9 +586,7 @@
           <tr><td>4</td><td>5</td><td>6</td><td>7</td><td style="position:relative;">
             <span style="position:relative;display:inline-block;">
               8
-              <svg width="22" height="22" viewBox="0 0 22 22" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-60%);z-index:-1;">
-                <path d="M11 19s-7-4.35-7-9.5A4.5 4.5 0 0 1 11 5a4.5 4.5 0 0 1 7 4.5C18 14.65 11 19 11 19z" fill="#e9a5b3"/>
-              </svg>
+              <img src="heart.png" alt="heart" class="custom-heart" style="position:absolute;left:35%;top:56%;transform:translate(-50%,-60%);z-index:-1;width:30px;height:30px;" />
             </span>
           </td><td>9</td><td>10</td></tr>
           <tr><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td></tr>
@@ -591,7 +612,7 @@
           </div>
           <div class="timeline-center">
             <div class="timeline-line top"></div>
-            <div class="timeline-heart"></div>
+            <img src="heart.png" alt="heart" class="custom-heart" style="width:44px;height:44px;" />
             <div class="timeline-line bottom"></div>
           </div>
           <div class="event right"></div>
@@ -600,7 +621,7 @@
           <div class="event left"></div>
           <div class="timeline-center">
             <div class="timeline-line top"></div>
-            <div class="timeline-heart"></div>
+            <img src="heart.png" alt="heart" class="custom-heart" style="width:44px;height:44px;" />
             <div class="timeline-line bottom"></div>
           </div>
           <div class="event right">
@@ -615,7 +636,7 @@
           </div>
           <div class="timeline-center">
             <div class="timeline-line top"></div>
-            <div class="timeline-heart"></div>
+            <img src="heart.png" alt="heart" class="custom-heart" style="width:44px;height:44px;" />
             <div class="timeline-line bottom"></div>
           </div>
           <div class="event right"></div>
@@ -624,7 +645,7 @@
           <div class="event left"></div>
           <div class="timeline-center">
             <div class="timeline-line top"></div>
-            <div class="timeline-heart"></div>
+            <img src="heart.png" alt="heart" class="custom-heart" style="width:44px;height:44px;" />
             <div class="timeline-line bottom"></div>
           </div>
           <div class="event right">
@@ -717,9 +738,7 @@
       <div style="font-size:1.35rem; font-weight:600; text-align:center;">ОЧЕНЬ ВАС ЖДЕМ!</div>
       <div class="script" style="font-size:1.2rem; margin-top:0.7rem; margin-bottom:0.7rem; text-align:center;">С любовью, Дарья и Богдан</div>
       <div class="hearts">
-        <span class="timeline-heart"></span>
-        <span class="timeline-heart"></span>
-        <span class="timeline-heart"></span>
+        <img src="hearts.png" alt="hearts" class="main-hearts-img" />
       </div>
     </div>
     <footer>
